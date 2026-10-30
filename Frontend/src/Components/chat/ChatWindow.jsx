@@ -57,10 +57,10 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#0d0e1d]">
+    <div className="h-full flex flex-col bg-gray-900">
 
       {/* Chat Header */}
-      <div className="h-12 shrink-0 flex items-center justify-between px-4 md:px-5 border-b border-white/[0.06]">
+      <div className="h-12 shrink-0 flex items-center justify-between px-4 md:px-5 bg-gray-900 border-b border-white/[0.06]">
 
         <div className="flex items-center gap-2.5">
           <button className="text-gray-500 hover:text-white transition">
@@ -83,17 +83,15 @@ export default function ChatWindow() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 min-h-0 overflow-y-auto px-3 py-4 md:px-5 md:py-5">
+      <div className="flex-1 min-h-0 overflow-y-auto px-1 py-2 md:px-5 md:py-5">
 
-        <div className="max-w-2xl mx-auto space-y-2.5">
-
+        <div className="max-w-2xl mx-auto space-y-2">
           {messages.map((message) => (
             <ChatMessage
               key={message.id}
               message={message}
             />
           ))}
-
           {loading && <TypingIndicator />}
 
         </div>

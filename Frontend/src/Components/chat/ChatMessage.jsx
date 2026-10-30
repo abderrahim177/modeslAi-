@@ -22,10 +22,10 @@ export default function ChatMessage({ message }) {
         </p>
 
         <div
-          className={`p-4 rounded-2xl text-sm leading-7 ${
+          className={`p-2 rounded-2xl text-[13px] leading-7 ${
             isUser
-              ? "bg-indigo-600/20 border border-indigo-500/20 text-gray-200"
-              : "bg-[#202137] border border-white/5 text-gray-300"
+              ? "bg-blue-800 border border-indigo-500/20 text-gray-200"
+              : "bg-gray-600 border border-white/5 text-gray-300"
           }`}
         >
           {message.content}
