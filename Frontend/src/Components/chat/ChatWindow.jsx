@@ -28,16 +28,16 @@ const initialMessages = [
 export default function ChatWindow() {
   const [messages, setMessages] = useState(initialMessages);
   const [loading, setLoading] = useState(false);
-
+  // post request to API model;
+  
+  // get request to API model;
   const sendMessage = (content) => {
     const newMessage = {
       id: Date.now(),
       role: "user",
       content,
     };
-
     setMessages((previous) => [...previous, newMessage]);
-
     // Temporary response for UI testing
     setLoading(true);
 
@@ -51,37 +51,12 @@ export default function ChatWindow() {
             "This is a demo response. Later, we will connect this chat to the Laravel API and the selected AI provider.",
         },
       ]);
-
       setLoading(false);
     }, 1200);
   };
 
   return (
-    <div className="h-full flex flex-col bg-gray-900">
-
-      {/* Chat Header */}
-      <div className="h-12 shrink-0 flex items-center justify-between px-4 md:px-5 bg-gray-900 border-b border-white/[0.06]">
-
-        <div className="flex items-center gap-2.5">
-          <button className="text-gray-500 hover:text-white transition">
-            <ArrowLeft size={16} />
-          </button>
-
-          <div>
-            <h2 className="text-xs font-semibold text-white">
-              New Chat
-            </h2>
-            <p className="text-[10px] text-gray-500">
-              Start a conversation
-            </p>
-          </div>
-        </div>
-
-        <button className="text-gray-500 hover:text-white transition">
-          <MoreHorizontal size={18} />
-        </button>
-      </div>
-
+    <div className="h-full flex flex-col bg-gray-200/100">
       {/* Messages */}
       <div className="flex-1 min-h-0 overflow-y-auto px-1 py-2 md:px-5 md:py-5">
 
@@ -98,7 +73,7 @@ export default function ChatWindow() {
       </div>
 
       {/* Chat Input */}
-      <div className="shrink-0 px-3 pb-3 pt-2 md:px-5 md:pb-4">
+      <div className="shrink-0 px-3 pb-3 pt-2 md:px-5 md:pb-4 ">
 
         <div className="max-w-3xl mx-auto">
 

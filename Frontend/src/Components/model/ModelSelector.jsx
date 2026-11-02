@@ -26,6 +26,7 @@ const models = [
     icon: "✦",
     color: "text-blue-400",
     bg: "bg-blue-400/10",
+    Alert : "not available"
   },
   {
     id: "claude",
@@ -35,11 +36,12 @@ const models = [
     icon: "✴",
     color: "text-orange-400",
     bg: "bg-orange-400/10",
+    Alert : "not available"
   },
 ];
 
-export default function ModelSelector() {
-  const [selected, setSelected] = useState(models[0]);
+export default function ModelSelector({model}) {
+  const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -50,7 +52,8 @@ export default function ModelSelector() {
       .toLowerCase()
       .includes(search.toLowerCase())
   );
-
+  model(selected);
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -93,27 +96,25 @@ export default function ModelSelector() {
         aria-expanded={open}
         aria-haspopup="listbox"
         className={`
-          flex items-center gap-2 px-2 py-1.5
-          rounded-lg border transition-all duration-200
+          ${ selected ? "flex items-center gap-2 px-2 py-1 rounded-2xl transition-all duration-200" : "flex items-center justify-start px-2 py-1 rounded-2xl transition-all duration-200"}
           ${
             open
-              ? "bg-[#22233d] border-purple-500/50"
-              : "bg-[#191a30] border-white/[0.08] hover:border-white/20"
+              ? "bg-gray-200 text-gray-900 "
+              : "bg-gray-200  text-gray-900  border-white/[0.08] hover:border-white/20"
           }
         `}
       >
         <div
           className={`w-6 h-6 rounded-md flex items-center justify-center text-sm ${selected.bg} ${selected.color}`}
         >
-          {selected.icon}
+          {selected ?  selected.icon : ""}
         </div>
-
-        <div className="text-left">
-          <p className="text-xs font-semibold text-white leading-tight">
-            {selected.name}
+        <div className="text-left ">
+          <p className={`${selected ? "text-xs font-semibold text-gray-900 leading-tight" : "text-gray-600 font-bold text-[12px]"}`}>
+            {selected ?  selected.name : "Selected"}
           </p>
-          <p className="text-[9px] text-gray-500 leading-tight">
-            {selected.provider}
+          <p className="text-[9px] text-gray-700 leading-tight">
+            {selected ? selected.provider : ""}
           </p>
         </div>
 
@@ -129,10 +130,10 @@ export default function ModelSelector() {
       {open && (
         <div
           className="
-            absolute right-0 top-[calc(100%+8px)] z-50
+            absolute right-0 top-[calc(100%-370px)] z-50
             w-[250px] overflow-hidden
             rounded-xl border border-white/10
-            bg-[#17182b]/95 backdrop-blur-2xl
+            bg-gray-100 text-gray-900/95 backdrop-blur-2xl
             shadow-xl shadow-black/40
             animate-in fade-in slide-in-from-top-2 duration-200
           "
@@ -140,26 +141,26 @@ export default function ModelSelector() {
           {/* Header */}
           <div className="px-3 pt-3 pb-2">
             <div className="flex items-center gap-1.5 mb-1">
-              <Sparkles size={12} className="text-purple-400" />
-              <h3 className="text-xs font-semibold text-white">
+              <Sparkles size={12} className="text-blue-600" />
+              <h3 className="text-xs font-semibold text-gray-900">
                 Choose a model
               </h3>
             </div>
-            <p className="text-[10px] text-gray-500">
+            <p className="text-[10px] text-gray-900">
               Select your AI assistant
             </p>
           </div>
 
           {/* Search */}
-          <div className="px-2.5 pb-2">
-            <div className="flex items-center gap-2 px-2.5 rounded-lg bg-white/[0.04] border border-white/[0.07] focus-within:border-purple-500/50 transition-colors">
+          <div className="px-2.5 pb-2 ">
+            <div className="flex items-center shadow-sm shadow-gray-500 gap-2 px-2.5 rounded-lg bg-white/[0.04] border border-white/[0.07] focus-within:border-blue-500/50 transition-colors">
               <Search size={12} className="text-gray-500" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search models..."
-                className="w-full py-2 bg-transparent outline-none text-xs text-white placeholder:text-gray-600"
+                className="w-full py-2 bg-transparent outline-none text-xs text-gray-900 placeholder:text-gray-800"
               />
             </div>
           </div>
@@ -186,11 +187,12 @@ export default function ModelSelector() {
                       rounded-lg text-left transition-all duration-150
                       ${
                         isSelected
-                          ? "bg-purple-500/10 border border-purple-500/20"
-                          : "border border-transparent hover:bg-white/[0.05]"
+                          ? "bg-blue-900/10 border border-blue-900"
+                          : "border border-transparent hover:bg-gray-200"
                       }
                     `}
                   >
+                    <div className="flex justify-between gap-1">
                     <div
                       className={`w-8 h-8 rounded-lg flex items-center justify-center text-base ${model.bg} ${model.color}`}
                     >
@@ -199,26 +201,29 @@ export default function ModelSelector() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <p className="text-xs font-semibold text-white">
+                        <p className="text-xs font-semibold text-gray-900">
                           {model.name}
                         </p>
 
                         {isSelected && (
-                          <span className="text-[8px] uppercase tracking-wide text-purple-300 bg-purple-500/15 px-1 py-0.5 rounded">
+                          <span className="text-[8px] uppercase tracking-wide text-purple-900 bg-purple-500/15 px-1 py-0.5 rounded">
                             Active
                           </span>
                         )}
                       </div>
 
-                      <p className="text-[10px] text-gray-500 mt-0.5">
+                      <p className="text-[10px] text-gray-800 mt-0.5">
                         {model.provider}
                       </p>
 
-                      <p className="text-[9px] text-gray-600 mt-0.5">
+                      <p className="text-[9px] text-gray-800 mt-0.5">
                         {model.description}
                       </p>
                     </div>
-
+                    <div className="text-[9px] px-1 rounded-xl bg-red-300/50 text-red-700 h-[20%]">
+                        {model.Alert}
+                    </div>
+                    </div>
                     {isSelected && (
                       <Check
                         size={14}
@@ -234,7 +239,7 @@ export default function ModelSelector() {
                   size={20}
                   className="mx-auto text-gray-600 mb-1.5"
                 />
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-800">
                   No models found
                 </p>
               </div>

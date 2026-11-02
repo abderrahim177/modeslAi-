@@ -3,24 +3,22 @@ import MessageActions from "./MessageActions";
 
 export default function ChatMessage({ message }) {
   const isUser = message.role === "user";
-
+  
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
       <div
         className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center ${
           isUser
-            ? "bg-gradient-to-br from-orange-400 to-pink-500"
+            ? "bg-orange-500"
             : "bg-gradient-to-br from-cyan-500 to-indigo-600"
         }`}
       >
-        {isUser ? <User size={17} /> : <Bot size={19} />}
+        {isUser ? <User size={17} fontWeight={40} /> : <Bot size={19} />}
       </div>
-
       <div className={`max-w-[80%] ${isUser ? "text-right" : ""}`}>
-        <p className="text-xs font-semibold text-gray-300 mb-2">
+        <p className="text-xs font-semibold text-gray-900 mb-2">
           {isUser ? "You" : "Vortex"}
         </p>
-
         <div
           className={`p-2 rounded-2xl text-[13px] leading-7 ${
             isUser
@@ -30,7 +28,6 @@ export default function ChatMessage({ message }) {
         >
           {message.content}
         </div>
-
         {!isUser && <MessageActions />}
       </div>
     </div>

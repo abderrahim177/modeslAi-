@@ -1,6 +1,6 @@
 export default function TypingIndicator() {
   return (
-    <div className="flex items-center gap-2 text-gray-400 text-sm">
+    <div className="flex items-center gap-2 text-gray-800 font-bold text-sm">
       <span>Vortex is thinking</span>
 
       <div className="flex gap-1">

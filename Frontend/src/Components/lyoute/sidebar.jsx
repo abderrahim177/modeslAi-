@@ -1,47 +1,152 @@
+
+import {
+  Sidebar as ShadSidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+
 import {
   House,
+  Search,
+  Archive,
+  Sparkles,
+  Folder,
+  Pin,
   MessageSquare,
-  History,
-  Bookmark,
+  Plus,
   Settings,
-  PanelLeftClose,
+  ChevronsUpDown,
 } from "lucide-react";
 
-const navigation = [
-  { icon: House, label: "Dashboard" },
-  { icon: MessageSquare, label: "New Chat" },
-  { icon: History, label: "History" },
-  { icon: Bookmark, label: "Saved" },
+const mainItems = [
+  { title: "Home", icon: House },
+  { title: "Search", icon: Search },
+  { title: "Archived", icon: Archive },
+  { title: "Upgrade", icon: Sparkles },
 ];
+
+const projects = ["My Portfolio", "Learning AI", "Work"];
+
+const pinnedChats = ["React Dashboard", "Laravel API"];
+
+const chats = ["New chatbot project", "Gemini integration", "UI improvements"];
+
+function MenuItems({ items }) {
+  return (
+    <SidebarMenu>
+      {items.map((item) => (
+        <SidebarMenuItem key={item.title}>
+          <SidebarMenuButton tooltip={item.title}>
+            <item.icon />
+            <span>{item.title}</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  );
+}
 
 export default function Sidebar() {
   return (
-    <aside className="w-[50px] shrink-0 bg-[#0b0c1b] border-r border-white/10 flex flex-col items-center py-5 justify-between">
-      <div className="flex flex-col gap-3">
-        {navigation.map(({ icon: Icon, label }, index) => (
-          <button
-            key={label}
-            title={label}
-            className={`w-11 h-11 rounded-xl flex items-center justify-center transition ${
-              index === 0
-                ? "bg-purple-500/20 text-purple-400"
-                : "text-gray-500 hover:text-white hover:bg-white/10"
-            }`}
-          >
-            <Icon size={19} />
-          </button>
-        ))}
-      </div>
+    <ShadSidebar
+      collapsible="icon"
+      className="border-r border-stone-200 bg-[#f8f7f4]"
+    >
+      <SidebarHeader className="px-2 py-5 overflow-hidden">
+        <div className="flex h-10 w-full min-w-0 items-center gap-2 overflow-hidden">
+          <div className="flex size-9 min-w-9 shrink-0 items-center justify-center rounded-xl bg-stone-900 text-white">
+            <MessageSquare size={19} />
+          </div>
 
-      <div className="flex flex-col gap-3">
-        <button className="w-11 h-11 rounded-xl flex items-center justify-center text-gray-500 hover:bg-white/10 hover:text-white">
-          <Settings size={19} />
-        </button>
+          <span className="truncate text-lg font-bold text-stone-900 group-data-[collapsible=icon]:hidden">
+            Promptly
+          </span>
+        </div>
+      </SidebarHeader>
 
-        <button className="w-11 h-11 rounded-xl flex items-center justify-center text-gray-500 hover:bg-white/10 hover:text-white">
-          <PanelLeftClose size={19} />
-        </button>
-      </div>
-    </aside>
+      <SidebarContent className="bg-[#f8f7f4]">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <MenuItems items={mainItems} />
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <div className="flex items-center justify-between px-2">
+            <SidebarGroupLabel>Projects</SidebarGroupLabel>
+            <Plus size={15} className="text-stone-500" />
+          </div>
+          <SidebarGroupContent>
+            <MenuItems
+              items={projects.map((title) => ({
+                title,
+                icon: Folder,
+              }))}
+            />
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Pinned chats</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <MenuItems
+              items={pinnedChats.map((title) => ({
+                title,
+                icon: Pin,
+              }))}
+            />
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Your chats</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <MenuItems
+              items={chats.map((title) => ({
+                title,
+                icon: MessageSquare,
+              }))}
+            />
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter className="border-t border-stone-200 p-2 overflow-hidden">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Settings">
+              <Settings />
+              <span className="group-data-[collapsible=icon]:hidden">
+                Settings
+              </span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Abderrahim">
+              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-stone-800 text-xs text-white">
+                A
+              </div>
+
+              <span className="flex-1 truncate group-data-[collapsible=icon]:hidden">
+                Abderrahim
+              </span>
+
+              <ChevronsUpDown
+                size={15}
+                className="group-data-[collapsible=icon]:hidden"
+              />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </ShadSidebar>
   );
 }
