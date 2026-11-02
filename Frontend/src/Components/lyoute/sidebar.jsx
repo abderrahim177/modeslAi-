@@ -1,152 +1,84 @@
 
-import {
-  Sidebar as ShadSidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-} from "@/components/ui/sidebar";
-
+import { useState } from "react";
 import {
   House,
-  Search,
-  Archive,
-  Sparkles,
-  Folder,
-  Pin,
   MessageSquare,
-  Plus,
+  History,
+  Bookmark,
   Settings,
-  ChevronsUpDown,
+  LogOut,
 } from "lucide-react";
 
-const mainItems = [
-  { title: "Home", icon: House },
-  { title: "Search", icon: Search },
-  { title: "Archived", icon: Archive },
-  { title: "Upgrade", icon: Sparkles },
+const navigation = [
+  { icon: House, label: "Dashboard" },
+  { icon: MessageSquare, label: "New Chat" },
+  { icon: History, label: "History" },
+  { icon: Bookmark, label: "Saved" },
 ];
 
-const projects = ["My Portfolio", "Learning AI", "Work"];
-
-const pinnedChats = ["React Dashboard", "Laravel API"];
-
-const chats = ["New chatbot project", "Gemini integration", "UI improvements"];
-
-function MenuItems({ items }) {
-  return (
-    <SidebarMenu>
-      {items.map((item) => (
-        <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton tooltip={item.title}>
-            <item.icon />
-            <span>{item.title}</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      ))}
-    </SidebarMenu>
-  );
-}
-
 export default function Sidebar() {
+  const [activeItem, setActiveItem] = useState("Dashboard");
+
+  const handleLogout = () => {
+    // زيد هنا منطق تسجيل الخروج ديالك
+    console.log("Logout clicked");
+  };
+
   return (
-    <ShadSidebar
-      collapsible="icon"
-      className="border-r border-stone-200 bg-[#f8f7f4]"
-    >
-      <SidebarHeader className="px-2 py-5 overflow-hidden">
-        <div className="flex h-10 w-full min-w-0 items-center gap-2 overflow-hidden">
-          <div className="flex size-9 min-w-9 shrink-0 items-center justify-center rounded-xl bg-stone-900 text-white">
-            <MessageSquare size={19} />
-          </div>
+    <aside className="w-[50px] shrink-0 bg-gray-200 flex flex-col items-start px-[4px] py-5 justify-between">
+      {/* Navigation */}
+      <div className="flex flex-col gap-1.5">
+        {navigation.map(({ icon: Icon, label }) => {
+          const isActive = activeItem === label;
 
-          <span className="truncate text-lg font-bold text-stone-900 group-data-[collapsible=icon]:hidden">
-            Promptly
-          </span>
-        </div>
-      </SidebarHeader>
+          return (
+            <div
+              key={label}
+              className="rounded-xl"
+            >
+              <button
+                type="button"
+                title={label}
+                onClick={() => setActiveItem(label)}
+                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200
+                  ${
+                    isActive
+                      ? "bg-orange-500 text-white shadow-sm mb-5"
+                      : "text-gray-600 hover:bg-white hover:text-gray-900"
+                  }`}
+              >
+                <Icon size={19} />
+              </button>
+            </div>
+          );
+        })}
+      </div>
 
-      <SidebarContent className="bg-[#f8f7f4]">
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <MenuItems items={mainItems} />
-          </SidebarGroupContent>
-        </SidebarGroup>
+      {/* Bottom Actions */}
+      <div className="flex flex-col gap-2">
+        <button
+          type="button"
+          title="Settings"
+          onClick={() => setActiveItem("Settings")}
+          className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200
+            ${
+              activeItem === "Settings"
+                ? "bg-orange-500 text-white"
+                : "text-gray-600 hover:bg-gray-300"
+            }`}
+        >
+          <Settings size={19} />
+        </button>
 
-        <SidebarGroup>
-          <div className="flex items-center justify-between px-2">
-            <SidebarGroupLabel>Projects</SidebarGroupLabel>
-            <Plus size={15} className="text-stone-500" />
-          </div>
-          <SidebarGroupContent>
-            <MenuItems
-              items={projects.map((title) => ({
-                title,
-                icon: Folder,
-              }))}
-            />
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Pinned chats</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <MenuItems
-              items={pinnedChats.map((title) => ({
-                title,
-                icon: Pin,
-              }))}
-            />
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Your chats</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <MenuItems
-              items={chats.map((title) => ({
-                title,
-                icon: MessageSquare,
-              }))}
-            />
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-
-      <SidebarFooter className="border-t border-stone-200 p-2 overflow-hidden">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Settings">
-              <Settings />
-              <span className="group-data-[collapsible=icon]:hidden">
-                Settings
-              </span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Abderrahim">
-              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-stone-800 text-xs text-white">
-                A
-              </div>
-
-              <span className="flex-1 truncate group-data-[collapsible=icon]:hidden">
-                Abderrahim
-              </span>
-
-              <ChevronsUpDown
-                size={15}
-                className="group-data-[collapsible=icon]:hidden"
-              />
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </ShadSidebar>
+        <button
+          type="button"
+          title="Logout"
+          onClick={handleLogout}
+          className="w-9 h-9 rounded-full flex items-center justify-center text-red-600 hover:bg-red-300/70 transition-all duration-200"
+        >
+          <LogOut size={19} />
+        </button>
+      </div>
+    </aside>
   );
 }
